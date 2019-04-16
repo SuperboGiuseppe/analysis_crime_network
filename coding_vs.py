@@ -93,33 +93,44 @@ def get_graph_attributes(net_G):
     ["net density", net_density]]
     return graph_attributes
 
-##------------------------------------------------------------------------------------------##
-# GET netWR data
 
-# Display the graph
-netWR_csv = "./DataSets/netWR.csv"
-netWR_G = csv_to_graph(netWR_csv)
-#nx.draw(netWR_G, with_labels=True, node_color="skyblue")
-#plt.show()
+def main():
 
-netWR_graphAttribute = get_graph_attributes(netWR_G)
-##------------------------------------------------------------------------------------------##
-# get netAW data
-netAW_csv = "./DataSets/netAW.csv"
-netAW_G = csv_to_graph(netAW_csv)
-# Display the graph
-#nx.draw(netAW_G, with_labels=True, node_color="orange")
-#plt.show()
-netAW_graphAttribute = get_graph_attributes(netAW_G)
-##------------------------------------------------------------------------------------------##
-# get netJU data
-netJU_csv = "./DataSets/netJU.csv"
+    ##------------------------------------------------------------------------------------------##
+    # GET netWR data
+    # Display the graph
+    netWR_csv = "./DataSets/netWR.csv"
+    netWR_G = csv_to_graph(netWR_csv)
+    plt.figure(1)
+    plt.title("Network built upon WireTap Records")
+    netWR_graphAttribute = get_graph_attributes(netWR_G)
+    netWR_G.remove_nodes_from(list(nx.isolates(netWR_G)))
+    nx.draw(netWR_G, with_labels=True, node_color="skyblue")
 
-netJU_G = csv_to_graph(netJU_csv)
-# Display the graph
-#nx.draw(netJU_G, with_labels=True,node_color = "green")
-#plt.show()
-
-netJU_graphAttribute = get_graph_attributes(netJU_G)
+    ##------------------------------------------------------------------------------------------##
+    # get netAW data
+    netAW_csv = "./DataSets/netAW.csv"
+    netAW_G = csv_to_graph(netAW_csv)
+    # Display the graph
+    plt.figure(2)
+    plt.title("Network built upon Arrest warrants")
+    netAW_graphAttribute = get_graph_attributes(netAW_G)
+    netAW_G.remove_nodes_from(list(nx.isolates(netAW_G)))
+    nx.draw(netAW_G, with_labels=True, node_color="orange")
 
 
+    ##------------------------------------------------------------------------------------------##
+    # get netJU data
+    netJU_csv = "./DataSets/netJU.csv"
+    netJU_G = csv_to_graph(netJU_csv)
+    # Display the graph
+    plt.figure(3)
+    plt.title("Network built upon judgment")
+    netJU_graphAttribute = get_graph_attributes(netJU_G)
+    netJU_G.remove_nodes_from(list(nx.isolates(netJU_G)))
+    nx.draw(netJU_G, with_labels=True, node_color="green")
+
+    plt.show()
+
+if __name__ == '__main__':
+    main()
