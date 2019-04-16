@@ -58,8 +58,16 @@ def get_graph_attributes(net_G):
         degree_dict[node] = nodes_degree[node]
     maximum_degree = max(degree_dict.values())
     average_degree = sum(degree_dict.values())/num_of_nodes
-    # global clustering coefficient
-    global_clustering_coefficient = nx.average_clustering(net_G)
+    # global clustering coefficient: n - count numbers of paths of length two
+    nodes_triangles = nx.triangles(net_G)
+    num_of_triangles = sum(nodes_triangles.values())
+    pairs_path_length = dict(nx.all_pairs_shortest_path_length(net_G))
+    n = 0 
+    for node in pairs_path_length.keys():  
+        for item in pairs_path_length[node].values():
+            if item == 2:
+                n = n + 1
+    global_clustering_coefficient = (num_of_triangles * 6) / n
     # size of giant component
     giant_component = max(nx.connected_component_subgraphs(net_G),key=len)
     # return number of edges in graph=graph size
