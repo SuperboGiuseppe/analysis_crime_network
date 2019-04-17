@@ -2,7 +2,7 @@
 Question 2
 """
 
-import coding_vs as Q1
+import task1 as Q1
 import numpy as np
 import networkx as nx
 from numpy.random import randint
