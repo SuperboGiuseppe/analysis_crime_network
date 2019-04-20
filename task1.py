@@ -86,19 +86,19 @@ def get_graph_attributes(net_G):
     maximum_closeness_centrality = max(nodes_closeness_centrality.values())
     average_closeness_centrality = sum(nodes_closeness_centrality.values())/num_of_nodes
     # summarize graph attributes
-    graph_attributes = [["number of nodes", num_of_nodes], \
-    ["number of edges", num_of_edges], \
-    ["global clustering coefficient", global_clustering_coefficient], \
-    ["maximum degree", maximum_degree], \
-    ["average degree", average_degree], \
-    ["size of giant component", size_of_giant], \
-    ["average path length", average_shortest_path_length],\
-    ["maximum centrality", maximum_of_centrality], \
-    ["average centrality", average_of_centrality],\
-    ["maximum betweenness centrality", maximum_betweenness_centrality],\
-    ["maximum closeness centrality", maximum_closeness_centrality], \
-    ["average closeness centrality", average_closeness_centrality], \
-    ["net density", net_density]]
+    graph_attributes = [["Number of nodes:", num_of_nodes], \
+    ["Number of edges:", num_of_edges], \
+    ["Global clustering coefficient:", global_clustering_coefficient], \
+    ["Maximum degree:", maximum_degree], \
+    ["Average degree:", average_degree], \
+    ["Size of giant component:", size_of_giant], \
+    ["Average path length:", average_shortest_path_length],\
+    ["Maximum centrality:", maximum_of_centrality], \
+    ["Average centrality:", average_of_centrality],\
+    ["Maximum betweenness centrality:", maximum_betweenness_centrality],\
+    ["Maximum closeness centrality:", maximum_closeness_centrality], \
+    ["Average closeness centrality:", average_closeness_centrality], \
+    ["Net density:", net_density]]
     return graph_attributes
 
 
