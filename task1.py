@@ -1,5 +1,5 @@
 import networkx as nx
-from networkx.algorithms import community 
+import community 
 import numpy as np
 import csv
 import matplotlib.pyplot as plt
