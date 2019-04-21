@@ -101,6 +101,29 @@ def get_graph_attributes(net_G):
     ["Net density:", net_density]]
     return graph_attributes
 
+def community_detection(net_G):
+    """
+    Input - networkx graph
+    Output - numbers of communities and partition performance by using Louvain algorithm
+            (https://github.com/taynaud/python-louvain)
+    """
+    if list(nx.isolates(net_G)) == []:
+        part = community.best_partition(net_G)
+        #values = [part.get(node) for node in net_G.nodes()]
+        #nx.draw_spring(net_G, cmap = plt.get_cmap('jet'), node_color = values, node_size=30, with_labels=False)
+        #plt.show()
+    else:
+        net_G = net_G.copy()
+        net_G.remove_nodes_from(list(nx.isolates(net_G)))
+        part = community.best_partition(net_G)
+    list_nodes = []
+    for com in set(part.values()):
+        list_nodes.append([nodes for nodes in part.keys() if part[nodes] == com])
+    num_of_communities = len(list_nodes)
+    partition_performance = nx.algorithms.community.quality.performance(net_G, list_nodes)
+    net_communities = [["numbers of communities", num_of_communities], \
+                      ["partition performance", partition_performance]]
+    return net_communities
 
 def main():
 
@@ -112,6 +135,7 @@ def main():
     plt.figure(1)
     plt.title("Network built upon WireTap Records")
     netWR_graphAttribute = get_graph_attributes(netWR_G)
+    netWR_communities = community_detection(netWR_G)
     netWR_G.remove_nodes_from(list(nx.isolates(netWR_G)))
     nx.draw(netWR_G, with_labels=True, node_color="skyblue")
 
@@ -123,6 +147,7 @@ def main():
     plt.figure(2)
     plt.title("Network built upon Arrest warrants")
     netAW_graphAttribute = get_graph_attributes(netAW_G)
+    netAW_communities = community_detection(netAW_G)
     netAW_G.remove_nodes_from(list(nx.isolates(netAW_G)))
     nx.draw(netAW_G, with_labels=True, node_color="orange")
 
@@ -135,6 +160,7 @@ def main():
     plt.figure(3)
     plt.title("Network built upon judgment")
     netJU_graphAttribute = get_graph_attributes(netJU_G)
+    netJU_communities = community_detection(netJU_G)
     netJU_G.remove_nodes_from(list(nx.isolates(netJU_G)))
     nx.draw(netJU_G, with_labels=True, node_color="green")
 
