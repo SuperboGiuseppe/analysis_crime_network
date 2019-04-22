@@ -1,5 +1,5 @@
 """
-Question 2
+Task 2
 """
 import matplotlib.pyplot as plt
 import task1 as Q1
@@ -121,7 +121,7 @@ def main():
     plt.legend()
 
     plt.suptitle("Evolution of graph attributes")
-    plt.show()
+    #plt.show()
 
 if __name__ == '__main__':
     main()
