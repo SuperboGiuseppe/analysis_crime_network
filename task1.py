@@ -1,5 +1,5 @@
 import networkx as nx
-import community 
+import community
 import numpy as np
 import csv
 import matplotlib.pyplot as plt
@@ -121,8 +121,8 @@ def community_detection(net_G):
         list_nodes.append([nodes for nodes in part.keys() if part[nodes] == com])
     num_of_communities = len(list_nodes)
     partition_performance = nx.algorithms.community.quality.performance(net_G, list_nodes)
-    net_communities = [["numbers of communities", num_of_communities], \
-                      ["partition performance", partition_performance]]
+    net_communities = [["Numbers of communities:", num_of_communities], \
+                      ["Partition performance:", partition_performance]]
     return net_communities
 
 def main():
