@@ -4,6 +4,7 @@ Task 2
 import matplotlib.pyplot as plt
 import task1 as Q1
 import numpy as np
+import community
 import networkx as nx
 import networkx.algorithms.community as cm
 from numpy.random import randint
@@ -38,13 +39,15 @@ def graph_attributes(graph):
     nbNodes = graph.number_of_nodes()
     nodes_betweeness = nx.betweenness_centrality(graph)
     nodes_centrality = nx.degree_centrality(graph)
-    try:
-        communities = cm.greedy_modularity_communities(graph)
-        nbCommun = len(list(communities))
-        perfCommun = cm.performance(graph,communities)
-    except(ZeroDivisionError):
-        nbCommun = 0
-        perfCommun = 0
+    community_properties = Q1.community_detection(graph)
+##    try:
+##        communities = community.best_partition(graph)
+##        #communities = cm.greedy_modularity_communities(graph)
+##        nbCommun = len(list(communities))
+##        perfCommun = cm.performance(graph,communities)
+##    except(ZeroDivisionError):
+##        nbCommun = 0
+##        perfCommun = 0
     ## ...global clustering coefficient copied from task 1
     nodes_triangles = nx.triangles(graph)
     num_of_triangles = sum(nodes_triangles.values())
@@ -64,8 +67,8 @@ def graph_attributes(graph):
     res['avgCentrality'] = sum(nodes_centrality.values())/nbNodes
     res['avgBetweenCentrality'] = sum(nodes_betweeness.values())/nbNodes
     res['maxBetweenCentrality'] = max(nodes_betweeness.values())
-    res['nbDetectCommunities'] = nbCommun
-    res['qlDetectCommunities'] = perfCommun
+    res['nbDetectCommunities'] = community_properties[0][1]
+    res['qlDetectCommunities'] = community_properties[1][1]
     return res
     
 def main():
