@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import task1 as t1
 import task2 as t2
+import task3_4_5 as t345
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg,  NavigationToolbar2Tk
 import networkx as nx
@@ -26,12 +27,14 @@ def main_window():
             draw_plot(0)
         if(clicked_tab == 1):
             draw_plot(1)
-
+        if(clicked_tab == 2):
+            draw_plot(2)
 
     def draw_plot(tab):
 
         def OptionMenu_Changed(event):
             graph = variable.get()
+
             if(tab == 0):
                 if(graph == "WireTap Records"):
                     net_csv = "./DataSets/netWR.csv"
@@ -55,8 +58,25 @@ def main_window():
                 fig = plt.figure(1)
                 plt.title(title)
                 nx.draw(net_graph, pos=nx.spring_layout(net_graph), with_labels=True, node_color=color)
+
+            if(tab == 1):
+                if (graph == "WireTap Records"):
+                    net_csv = "./DataSets/netWR.csv"
+                    title = "Evolution of WireTap records graph attributes"
+                if (graph == "Arrest warrants"):
+                    net_csv = "./DataSets/netAW.csv"
+                    title = "Evolution of Arrest warrants graph attributes"
+                if (graph == "Judgment"):
+                    net_csv = "./DataSets/netJU.csv"
+                    title = "Evolution of Judgment graph attributes"
+                plt.clf()
+                fig = plt.figure(1)
+                plt.suptitle(title)
+                t2.task2doer(net_csv)
                 canvas = FigureCanvasTkAgg(fig, master=content_frame)
-                canvas.get_tk_widget().grid(row=1, column=0, sticky=NSEW, columnspan=2)
+                canvas.get_tk_widget().grid(row=0, column=0, sticky=NSEW, columnspan=2)
+
+
 
         if(tab == 0):
             dropmenu = OptionMenu(content_frame, variable, "WireTap Records", "Arrest warrants", "Judgment",command=OptionMenu_Changed)
@@ -85,9 +105,24 @@ def main_window():
             toolbar.update()
         if(tab == 1):
             fig = plt.figure(1)
-            t2.main()
+            dropmenu = OptionMenu(content_frame, variable, "WireTap Records", "Arrest warrants", "Judgment", command=OptionMenu_Changed)
+            dropmenu.grid(column=1, row=3, sticky="e")
+            net_csv = "./DataSets/netWR.csv"
+            plt.suptitle("Evolution of WireTap records graph attributes")
+            t2.task2doer(net_csv)
             canvas = FigureCanvasTkAgg(fig, master=content_frame)
             canvas.get_tk_widget().grid(row=0, column=0, sticky=NSEW, columnspan=2)
+
+        if(tab == 2):
+            fig = plt.figure(1)
+            t345.main()
+            canvas = FigureCanvasTkAgg(fig, master=content_frame)
+            canvas.get_tk_widget().grid(row=0, column=0, sticky=NSEW, columnspan=2)
+            toolbar_frame = Frame(content_frame)
+            toolbar_frame.config(relief="sunken", borderwidth=1)
+            toolbar = NavigationToolbar2Tk(canvas, toolbar_frame)
+            toolbar_frame.grid(column=0, row=3, sticky=NSEW)
+            toolbar.update()
 
 
     main = Tk()

@@ -122,8 +122,8 @@ def task2doer(csv_file_path):
     plt.xlabel('threshold k')
     plt.legend()
 
-    plt.suptitle("Evolution of graph attributes")
-    plt.show()
+    #plt.suptitle("Evolution of graph attributes")
+    #plt.show()
 
 def main():
     #csvWR = "./DataSets/netWR.csv"

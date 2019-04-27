@@ -53,10 +53,10 @@ def main():
     net_result = filter_edges(net_B_A)
     net_graph = nx.Graph()
     net_graph.add_edges_from(net_result)
+    #t1.get_graph_attributes(net_graph)
     plt.figure(1)
     plt.title("Network built upon difference between WR and AW")
     nx.draw(net_graph, with_labels=True, node_color="skyblue")
-    plt.show()
 
 if __name__ == '__main__':
     main()
