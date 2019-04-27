@@ -71,7 +71,7 @@ def graph_attributes(graph):
     res['qlDetectCommunities'] = community_properties[1][1]
     return res
     
-def main():
+def task2doer(csv_file_path):
     ## initialize variables:
     globacCc = []
     maxCentrality = []
@@ -81,8 +81,7 @@ def main():
     nbDetectCommunities = []
     qlDetectCommunities = []
     ## create graph and adjacency matrix:
-    netWR_csv = "./DataSets/netWR.csv"
-    G,adjM = rand_weight_graph(netWR_csv)
+    G,adjM = rand_weight_graph(csv_file_path)
     ## create subgraphs with threshholds k from 1 to n
     n = int(np.max(adjM))
     k = 1
@@ -100,31 +99,40 @@ def main():
         k+=1
     ## plot results:
     xaxis = list(range(1, n+1))
-    plt.subplot(511)
+    plt.subplot(321)
     plt.plot(xaxis,globacCc, label="globacCc")
     plt.xlabel('threshold k')
     plt.legend()
-    plt.subplot(512)
+    plt.subplot(322)
     plt.plot(xaxis,maxCentrality, label="maxCentrality")
     plt.plot(xaxis,avgCentrality, label="avgCentrality")
     plt.xlabel('threshold k')
     plt.legend()
-    plt.subplot(513)
+    plt.subplot(323)
     plt.plot(xaxis,maxBetweenCentrality, label="maxBetweenCentrality")
     plt.plot(xaxis,avgBetweenCentrality, label="avgBetweenCentrality")
     plt.xlabel('threshold k')
     plt.legend()
-    plt.subplot(514)
+    plt.subplot(324)
     plt.plot(xaxis,nbDetectCommunities, label="nbDetectCommunities")
     plt.xlabel('threshold k')
     plt.legend()
-    plt.subplot(515)
+    plt.subplot(325)
     plt.plot(xaxis,qlDetectCommunities, label="qlDetectCommunities")
     plt.xlabel('threshold k')
     plt.legend()
 
     plt.suptitle("Evolution of graph attributes")
-    #plt.show()
+    plt.show()
+
+def main():
+    #csvWR = "./DataSets/netWR.csv"
+    #csvAW = "./DataSets/netAW.csv"
+    csvJU = "./DataSets/netJU.csv"
+    
+    #task2doer(csvWR)
+    #task2doer(csvAW)
+    task2doer(csvJU)
 
 if __name__ == '__main__':
     main()
