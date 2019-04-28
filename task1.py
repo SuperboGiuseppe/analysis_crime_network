@@ -3,8 +3,7 @@ import community
 import numpy as np
 import csv
 import matplotlib.pyplot as plt
-import itertools
-
+from operator import itemgetter
 
 def parse(csvfilename):
     """
@@ -53,11 +52,8 @@ def get_graph_attributes(net_G):
     net_density = nx.density(net_G)
     # maximum degree and average degree
     nodes_degree = nx.degree(net_G)
-    degree_dict = {}
-    for node in range(1,num_of_nodes + 1):
-        degree_dict[node] = nodes_degree[node]
-    maximum_degree = max(degree_dict.values())
-    average_degree = sum(degree_dict.values())/num_of_nodes
+    maximum_degree = max(nodes_degree, key=itemgetter(1))[0]
+    average_degree = sum([node[1] for node in nodes_degree])/num_of_nodes
     # global clustering coefficient: n - count numbers of paths of length two
     nodes_triangles = nx.triangles(net_G)
     num_of_triangles = sum(nodes_triangles.values())

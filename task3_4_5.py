@@ -6,26 +6,17 @@ import matplotlib.pyplot as plt
 
 """Task 3, 4 ,5"""
 
-## Teacher didn't show up yet...
-## given two edges: E1(D1,A1,W1) and E2(D2,A2,W2):
-## exapmle of 'important changes' = absolute difference between W1 and W2 is > k.
-## we define the threshhold k as:   -- average weight of every edge in the graph?
-##                                  -- maybe reuse a value from task 1 <- NO! None of them use the weights.
-##                                  -- I'm going to read the paper this is based on and see if they talk about this.
-## ^ These are just my ideas after reading the task description. The teacher didn't come and I got tired of waiting! ^
-
-
 
 def calculate_weight(net_A, net_B):
     edges_A = list(net_A.edges(data=True))
-    #print(edges_A)
     edges_B = list(net_B.edges(data=True))
     ## select common edges:
     filtered_edges_A = [(a,b,c) for (a,b,c) in edges_A for (d,e,f) in edges_B if ((a == d) and (b == e))]
+    filtered_edges_B = [(a, b, c) for (a, b, c) in edges_B for (d, e, f) in edges_A if ((a == d) and (b == e))]
     edges_C = filtered_edges_A.copy()
     ## weight is result of the absolute-difference between the two weights:
-    for i in range(len(edges_B)):
-        edges_C[i][2]["weight"] = abs(edges_B[i][2]["weight"] - filtered_edges_A[i][2]["weight"])
+    for i in range(len(filtered_edges_B)):
+        edges_C[i][2]["weight"] = abs(filtered_edges_B[i][2]["weight"] - filtered_edges_A[i][2]["weight"])
     return edges_C
 
 def filter_edges(edges_list):
@@ -46,17 +37,17 @@ def filter_edges(edges_list):
     return result_list
 
 
-def main():
-    net_A = t2.rand_weight_graph("./DataSets/netWR.csv")[0]
-    net_B = t2.rand_weight_graph("./DataSets/netAW.csv")[0]
+def main(csv_A, csv_B):
+    net_A = t2.rand_weight_graph(csv_A)[0]
+    net_B = t2.rand_weight_graph(csv_B)[0]
     net_B_A = calculate_weight(net_A, net_B)
     net_result = filter_edges(net_B_A)
     net_graph = nx.Graph()
     net_graph.add_edges_from(net_result)
-    #t1.get_graph_attributes(net_graph)
-    plt.figure(1)
-    plt.title("Network built upon difference between WR and AW")
-    nx.draw(net_graph, with_labels=True, node_color="skyblue")
+    nx.draw(net_graph, pos=nx.spring_layout(net_graph), with_labels=True, node_color="skyblue")
+    attributes = t1.get_graph_attributes(net_graph)
+    community = t1.community_detection(net_graph)
+    return attributes, community
 
 if __name__ == '__main__':
     main()

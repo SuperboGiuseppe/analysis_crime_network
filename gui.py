@@ -29,6 +29,10 @@ def main_window():
             draw_plot(1)
         if(clicked_tab == 2):
             draw_plot(2)
+        if(clicked_tab == 3):
+            draw_plot(3)
+        if (clicked_tab == 4):
+            draw_plot(4)
 
     def draw_plot(tab):
 
@@ -103,7 +107,9 @@ def main_window():
             toolbar = NavigationToolbar2Tk(canvas, toolbar_frame)
             toolbar_frame.grid(column=0, row=3, sticky=NSEW)
             toolbar.update()
+
         if(tab == 1):
+            plt.clf()
             fig = plt.figure(1)
             dropmenu = OptionMenu(content_frame, variable, "WireTap Records", "Arrest warrants", "Judgment", command=OptionMenu_Changed)
             dropmenu.grid(column=1, row=3, sticky="e")
@@ -114,15 +120,68 @@ def main_window():
             canvas.get_tk_widget().grid(row=0, column=0, sticky=NSEW, columnspan=2)
 
         if(tab == 2):
+            plt.clf()
             fig = plt.figure(1)
-            t345.main()
+            plt.title("Network built upon difference between WR and AW")
+            net_attributes = t345.main("./DataSets/netWR.csv", "./DataSets/netAW.csv")
             canvas = FigureCanvasTkAgg(fig, master=content_frame)
             canvas.get_tk_widget().grid(row=0, column=0, sticky=NSEW, columnspan=2)
+            text_area_frame = Frame(content_frame, height=5)
+            text_area_frame.grid(column=0, row=4, sticky=NSEW, columnspan=2)
+            text_area = Text(text_area_frame, height=10)
+            scrollbarY = Scrollbar(text_area_frame, command=text_area.yview, orient="vertical")
+            text_area.pack(side=LEFT, fill=BOTH, expand="YES")
+            scrollbarY.pack(side=RIGHT, fill=Y)
+            text_area.insert(END, toString(net_attributes[0]))
+            text_area.insert(END, toString(net_attributes[1]))
             toolbar_frame = Frame(content_frame)
             toolbar_frame.config(relief="sunken", borderwidth=1)
             toolbar = NavigationToolbar2Tk(canvas, toolbar_frame)
             toolbar_frame.grid(column=0, row=3, sticky=NSEW)
             toolbar.update()
+
+        if (tab == 3):
+            plt.clf()
+            fig = plt.figure(1)
+            plt.title("Network built upon difference between WR and JU")
+            net_attributes = t345.main("./DataSets/netWR.csv", "./DataSets/netJU.csv")
+            canvas = FigureCanvasTkAgg(fig, master=content_frame)
+            canvas.get_tk_widget().grid(row=0, column=0, sticky=NSEW, columnspan=2)
+            text_area_frame = Frame(content_frame, height=5)
+            text_area_frame.grid(column=0, row=4, sticky=NSEW, columnspan=2)
+            text_area = Text(text_area_frame, height=10)
+            scrollbarY = Scrollbar(text_area_frame, command=text_area.yview, orient="vertical")
+            text_area.pack(side=LEFT, fill=BOTH, expand="YES")
+            scrollbarY.pack(side=RIGHT, fill=Y)
+            text_area.insert(END, toString(net_attributes[0]))
+            text_area.insert(END, toString(net_attributes[1]))
+            toolbar_frame = Frame(content_frame)
+            toolbar_frame.config(relief="sunken", borderwidth=1)
+            toolbar = NavigationToolbar2Tk(canvas, toolbar_frame)
+            toolbar_frame.grid(column=0, row=3, sticky=NSEW)
+            toolbar.update()
+
+        if (tab == 4):
+            plt.clf()
+            fig = plt.figure(1)
+            plt.title("Network built upon difference between AW and JU")
+            net_attributes = t345.main("./DataSets/netAW.csv", "./DataSets/netJU.csv")
+            canvas = FigureCanvasTkAgg(fig, master=content_frame)
+            canvas.get_tk_widget().grid(row=0, column=0, sticky=NSEW, columnspan=2)
+            text_area_frame = Frame(content_frame, height=5)
+            text_area_frame.grid(column=0, row=4, sticky=NSEW, columnspan=2)
+            text_area = Text(text_area_frame, height=10)
+            scrollbarY = Scrollbar(text_area_frame, command=text_area.yview, orient="vertical")
+            text_area.pack(side=LEFT, fill=BOTH, expand="YES")
+            scrollbarY.pack(side=RIGHT, fill=Y)
+            text_area.insert(END, toString(net_attributes[0]))
+            text_area.insert(END, toString(net_attributes[1]))
+            toolbar_frame = Frame(content_frame)
+            toolbar_frame.config(relief="sunken", borderwidth=1)
+            toolbar = NavigationToolbar2Tk(canvas, toolbar_frame)
+            toolbar_frame.grid(column=0, row=3, sticky=NSEW)
+            toolbar.update()
+
 
 
     main = Tk()
