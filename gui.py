@@ -37,9 +37,10 @@ def main_window():
     def draw_plot(tab):
 
         def OptionMenu_Changed(event):
-            graph = variable.get()
+
 
             if(tab == 0):
+                graph = variable.get()
                 if(graph == "WireTap Records"):
                     net_csv = "./DataSets/netWR.csv"
                     title = "Network built upon WireTap Records"
@@ -62,8 +63,11 @@ def main_window():
                 fig = plt.figure(1)
                 plt.title(title)
                 nx.draw(net_graph, pos=nx.spring_layout(net_graph), with_labels=True, node_color=color)
+                canvas = FigureCanvasTkAgg(fig, master=content_frame)
+                canvas.get_tk_widget().grid(row=1, column=0, sticky=NSEW, columnspan=2)
 
             if(tab == 1):
+                graph = variable.get()
                 if (graph == "WireTap Records"):
                     net_csv = "./DataSets/netWR.csv"
                     title = "Evolution of WireTap records graph attributes"
