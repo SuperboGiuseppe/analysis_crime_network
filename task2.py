@@ -63,10 +63,10 @@ def graph_attributes(graph):
         res['globacCc'] = 0
     else:
         res['globacCc']= (num_of_triangles * 6) / n
-    res['maxCentrality'] = max(nodes_centrality.values())
-    res['avgCentrality'] = sum(nodes_centrality.values())/nbNodes
-    res['avgBetweenCentrality'] = sum(nodes_betweeness.values())/nbNodes
-    res['maxBetweenCentrality'] = max(nodes_betweeness.values())
+    res['Centrality'] = abs(max(nodes_centrality.values()) -
+                            sum(nodes_centrality.values())/nbNodes)
+    res['BetweenCentrality'] = abs(max(nodes_betweeness.values()) -
+                                   sum(nodes_betweeness.values())/nbNodes)
     res['nbDetectCommunities'] = community_properties[0][1]
     res['qlDetectCommunities'] = community_properties[1][1]
     return res
@@ -74,10 +74,8 @@ def graph_attributes(graph):
 def task2doer(csv_file_path):
     ## initialize variables:
     globacCc = []
-    maxCentrality = []
-    avgCentrality = []
-    maxBetweenCentrality = []
-    avgBetweenCentrality = []
+    Centrality = []
+    BetweenCentrality = []
     nbDetectCommunities = []
     qlDetectCommunities = []
     ## create graph and adjacency matrix:
@@ -90,39 +88,35 @@ def task2doer(csv_file_path):
         ## measure attributes
         x = graph_attributes(tmpGraph)
         globacCc.append(x['globacCc'])
-        maxCentrality.append(x['maxCentrality'])
-        avgCentrality.append(x['avgCentrality'])
-        maxBetweenCentrality.append(x['maxBetweenCentrality'])
-        avgBetweenCentrality.append(x['avgBetweenCentrality'])
+        Centrality.append(x['Centrality'])
+        BetweenCentrality.append(x['BetweenCentrality'])
         nbDetectCommunities.append(x['nbDetectCommunities'])
         qlDetectCommunities.append(x['qlDetectCommunities'])
         k+=1
     ## plot results:
     xaxis = list(range(1, n+1))
     plt.subplot(321)
-    plt.plot(xaxis,globacCc, label="globacCc")
+    plt.plot(xaxis,globacCc)
     plt.xlabel('threshold k')
-    plt.legend()
+    plt.title("Global clustering coefficient")
     plt.subplot(322)
-    plt.plot(xaxis,maxCentrality, label="maxCentrality")
-    plt.plot(xaxis,avgCentrality, label="avgCentrality")
+    plt.plot(xaxis,Centrality)
     plt.xlabel('threshold k')
-    plt.legend()
+    plt.title("difference between max centrality \n and avg centrality")
     plt.subplot(323)
-    plt.plot(xaxis,maxBetweenCentrality, label="maxBetweenCentrality")
-    plt.plot(xaxis,avgBetweenCentrality, label="avgBetweenCentrality")
+    plt.plot(xaxis,BetweenCentrality)
     plt.xlabel('threshold k')
-    plt.legend()
+    plt.title("difference between max betweeness centrality \n and avg betweeness centrality")
     plt.subplot(324)
-    plt.plot(xaxis,nbDetectCommunities, label="nbDetectCommunities")
+    plt.plot(xaxis,nbDetectCommunities)
     plt.xlabel('threshold k')
-    plt.legend()
+    plt.title("number of detected comunities")
     plt.subplot(325)
-    plt.plot(xaxis,qlDetectCommunities, label="qlDetectCommunities")
+    plt.plot(xaxis,qlDetectCommunities)
     plt.xlabel('threshold k')
-    plt.legend()
-
+    plt.title("quality of detected communities")
     #plt.suptitle("Evolution of graph attributes")
+    plt.tight_layout()
     #plt.show()
 
 def main():
