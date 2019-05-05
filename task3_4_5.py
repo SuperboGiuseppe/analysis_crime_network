@@ -8,6 +8,14 @@ import matplotlib.pyplot as plt
 
 
 def calculate_weight(net_A, net_B):
+    """
+    Calculate_weight function filters first of all all the common edges between net A and net B (Intersection between
+    the two sets of edges). A new edges list is created and its weights are the result of the absolute difference
+    between the weights of the starting edges lists.
+    :param net_A: First network
+    :param net_B: Second network
+    :return: edges_C, filtered edges list with new weights
+    """
     edges_A = list(net_A.edges(data=True))
     edges_B = list(net_B.edges(data=True))
     ## select common edges:
@@ -20,8 +28,12 @@ def calculate_weight(net_A, net_B):
     return edges_C
 
 def filter_edges(edges_list):
-    #As threshold we decided to pick the average weight of every edge in the graph as it is an optimal value
-    #in order to show "important changes" inside the network
+    """
+    Filter_edges function is crucial for these tasks as it filters out all the edges with weight lower then our K
+    threshold which in our case is the average weight of all the network. All the edges below the average weight are removed.
+    :param edges_list: Network to be filtered
+    :return: Filtered network containing only edges with weight higher then the average weight.
+    """
 
     #Calculate threshold
     temp_sum = 0

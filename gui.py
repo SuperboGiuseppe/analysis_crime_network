@@ -3,6 +3,7 @@ from tkinter import ttk
 import task1 as t1
 import task2 as t2
 import task3_4_5 as t345
+import task6 as t6
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg,  NavigationToolbar2Tk
 import networkx as nx
@@ -33,6 +34,8 @@ def main_window():
             draw_plot(3)
         if (clicked_tab == 4):
             draw_plot(4)
+        if (clicked_tab == 5):
+            draw_plot(5)
 
     def draw_plot(tab):
 
@@ -84,9 +87,25 @@ def main_window():
                 canvas = FigureCanvasTkAgg(fig, master=content_frame)
                 canvas.get_tk_widget().grid(row=0, column=0, sticky=NSEW, columnspan=2)
 
-
+            if (tab == 5):
+                graph = variable.get()
+                if (graph == "Range 0.0 - 1.0"):
+                    fig = plt.figure(1)
+                if (graph == "Range 0.3 - 0.5"):
+                    fig = plt.figure(2)
+                if (graph == "p = 0.32, netWR"):
+                    fig = plt.figure(3)
+                if (graph == "p = 0.32, netAW"):
+                    fig = plt.figure(4)
+                if (graph == "Range 0.6-0.7"):
+                    fig = plt.figure(5)
+                if (graph == "p = 0.64, netJU"):
+                    fig = plt.figure(6)
+                canvas = FigureCanvasTkAgg(fig, master=content_frame)
+                canvas.get_tk_widget().grid(row=0, column=0, sticky=NSEW, columnspan=2)
 
         if(tab == 0):
+            variable.set("WireTap Records")
             dropmenu = OptionMenu(content_frame, variable, "WireTap Records", "Arrest warrants", "Judgment",command=OptionMenu_Changed)
             dropmenu.grid(column=1, row=3, sticky="e")
             plt.clf()
@@ -115,6 +134,7 @@ def main_window():
         if(tab == 1):
             plt.clf()
             fig = plt.figure(1)
+            variable.set("WireTap Records")
             dropmenu = OptionMenu(content_frame, variable, "WireTap Records", "Arrest warrants", "Judgment", command=OptionMenu_Changed)
             dropmenu.grid(column=1, row=3, sticky="e")
             net_csv = "./DataSets/netWR.csv"
@@ -186,7 +206,17 @@ def main_window():
             toolbar_frame.grid(column=0, row=3, sticky=NSEW)
             toolbar.update()
 
-
+        if (tab==5):
+            plt.clf()
+            fig = plt.figure(1)
+            t6.main()
+            canvas = FigureCanvasTkAgg(fig, master=content_frame)
+            canvas.get_tk_widget().grid(row=0, column=0, sticky=NSEW, columnspan=2)
+            variable.set("Range 0.0 - 1.0")
+            dropmenu = OptionMenu(content_frame, variable, "Range 0.0 - 1.0", "Range 0.3 - 0.5",
+                                  "p = 0.32, netWR", "p = 0.32, netAW", "Range 0.6-0.7",
+                                  "p = 0.64, netJU",command=OptionMenu_Changed)
+            dropmenu.grid(column=1, row=3, sticky="e")
 
     main = Tk()
     main.grid_columnconfigure(0, weight=1)
@@ -213,7 +243,6 @@ def main_window():
     tabControl.add(tab6, text="Task 6")
     tabControl.grid(row=0, sticky="nw")
     variable = StringVar(main)
-    variable.set("WireTap Records")
     draw_plot(0)
     tab_frame.pack(anchor=W, fill=BOTH, side=TOP, expand=False)
     content_frame.pack(anchor=N, fill=BOTH, expand=True, side=BOTTOM)

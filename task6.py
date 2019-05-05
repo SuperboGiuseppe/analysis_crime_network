@@ -114,11 +114,12 @@ def main():
     giant = attributes_from_powerlaw(182,2,0.0,1.0,0.1,1)[1]
 
     plt.figure(1)
+    plt.subplot(121)
     plt.plot(gcc.keys(), gcc.values())
     plt.title("Simulated network - global clustering coefficient")
     plt.xlabel('p')
 
-    plt.figure(2)
+    plt.subplot(122)
     plt.plot(giant.keys(), giant.values())
     plt.title("Simulated network - diameter of giant")
     plt.xlabel('p')
@@ -127,12 +128,13 @@ def main():
     gcc = attributes_from_powerlaw(182,2,0.3,0.5,0.001,1)[0]
     giant = attributes_from_powerlaw(182,2,0.3,0.5,0.001,1)[1]
 
-    plt.figure(3)
+    plt.figure(2)
+    plt.subplot(121)
     plt.plot(gcc.keys(), gcc.values())
     plt.title("Simulated network - global clustering coefficient")
     plt.xlabel('p')
 
-    plt.figure(4)
+    plt.subplot(122)
     plt.plot(giant.keys(), giant.values())
     plt.title("Simulated network - diameter of giant")
     plt.xlabel('p')
@@ -141,7 +143,7 @@ def main():
     rand_net = nx.powerlaw_cluster_graph(182,2,0.32,seed=1)
     rand_net = nx.convert_node_labels_to_integers(rand_net, first_label=1)
     randnet_attributes = graphAttribute_check(rand_net)
-    plt.figure(5)
+    plt.figure(3)
     plt.title("Simulated netWR")
     nx.draw(rand_net, with_labels=True, pos=nx.spring_layout(rand_net), node_color="skyblue", node_size=180, font_size=8)
 
@@ -154,7 +156,7 @@ def main():
     rand_net = nx.powerlaw_cluster_graph(182,2,0.33,seed=1)
     rand_net = nx.convert_node_labels_to_integers(rand_net, first_label=1)
     randnet_attributes = graphAttribute_check(rand_net)
-    plt.figure(6)
+    plt.figure(4)
     plt.title("Simulated netAW")
     nx.draw(rand_net, with_labels=True, pos=nx.spring_layout(rand_net), node_color="orange", node_size=180, font_size=8)
     #-----------------------------------simulate a random network for netJU--------------------------------------------#
@@ -168,12 +170,13 @@ def main():
     gcc = attributes_from_powerlaw(182,2,0.6,0.7,0.001,9)[0]
     giant = attributes_from_powerlaw(182,2,0.6,0.7,0.001,9)[1]
 
-    plt.figure(7)
+    plt.figure(5)
+    plt.subplot(121)
     plt.plot(gcc.keys(), gcc.values())
     plt.title("Simulated network - global clustering coefficient")
     plt.xlabel('p')
 
-    plt.figure(8)
+    plt.subplot(122)
     plt.plot(giant.keys(), giant.values())
     plt.title("Simulated network - diameter of giant")
     plt.xlabel('p')
@@ -182,11 +185,11 @@ def main():
     rand_net = nx.powerlaw_cluster_graph(182,2,0.64, seed=9)
     rand_net = nx.convert_node_labels_to_integers(rand_net, first_label=1)
     randnet_attributes = graphAttribute_check(rand_net)
-    plt.figure(9)
+    plt.figure(6)
     plt.title("Simulated netJU")
     nx.draw(rand_net, with_labels=True, pos=nx.spring_layout(rand_net), node_color="green", node_size=180, font_size=8)
-    
-    plt.show()
+
+    #plt.show()
 
 if __name__ == '__main__':
     main()
